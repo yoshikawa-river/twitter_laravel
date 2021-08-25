@@ -16,16 +16,18 @@
 
                 <div class="card-body">
                 @foreach($post AS $post)
-                  @if($post->allreply($post) == false)
+                  @if($post->checkreply($post) == false)
                   <article>
+                    
                     <header>
                       <div>
                         <a href="{{route('user_page', $post->user->id )}}">{{ $post->user->name }}</a>
-                        
                         <p>{{ $post['updated_at']}}</p>
+                        <!-- <p>返信先<a href="{{route('user_page', $post->user->id)}}">{{$post->user->name}}</a>さん</p> -->
                       </div>
                     </header>
                     <div>
+                      <a href="{{route('reply_page', $post->reply_id )}}">元のツイートへ</a>
                         <p>{{ $post['content'] }}</p>
                     </div>
                     @if ($post['image'] != null)
@@ -43,15 +45,15 @@
 
                           <div>{{ $post->like }}</div>
 
-                          <div class="d-inline float-left">
+                          <!-- <div class="d-inline float-left">
 	                        @if($post->checkreply($post))
                           <a href="{{route('reply_page', $post) }}"><i class="fas fa-reply fa-2x re_blue"></i></a>
 	                        @else
                           <a href="{{route('reply_page', $post) }}"><i class="fas fa-reply fa-2x heart_gray"></i></a>
 	                        @endif
-	                        </div>
+	                        </div> -->
 
-                        <div>{{ $post->countreply($post) }}</div>
+                        <!-- <div>{{ $post->countreply($post) }}</div> -->
                         
                         </div>
                       <hr>

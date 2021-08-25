@@ -1,28 +1,34 @@
 @extends('layouts.app')
 
 @section('content')
-
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">みんなの投稿</div>
-
-                @if (session('success'))
-                  <div class="alert alert-success" role="alert">
-                    {{ session('success') }}
-                  </div>
-                @endif
+                <div class="card-header">{{$user->name}}のページ</div>
 
                 <div class="card-body">
-                @foreach($post AS $post)
-                  @if($post->allreply($post) == false)
+          
                   <article>
                     <header>
                       <div>
-                        <a href="{{route('user_page', $post->user->id )}}">{{ $post->user->name }}</a>
-                        
+                      <h1>{{ $user->name }}</h1>
+                      <h2>コメント</h2>
+                      </div>
+                    </header>
+                  </article>
+                  </div>
+                  <hr>
+
+                @foreach($post AS $post)
+                @if($post->allreply($post) == false)
+                <div class="card-body">
+                  <article>
+                    <header>
+                      <div>
+                      {{ $post->user->name }}
                         <p>{{ $post['updated_at']}}</p>
+                        
                       </div>
                     </header>
                     <div>
@@ -40,9 +46,8 @@
                             <a href="{{route('like',$post) }}"><i class="fas fa-heart fa-2x heart_gray"></i></a>
 	                        @endif
 	                        </div>
-
                           <div>{{ $post->like }}</div>
-
+                        
                           <div class="d-inline float-left">
 	                        @if($post->checkreply($post))
                           <a href="{{route('reply_page', $post) }}"><i class="fas fa-reply fa-2x re_blue"></i></a>
@@ -58,7 +63,8 @@
                     </div>
 
                   </article>
-                  @endif
+                </div>
+                @endif
                 @endforeach
                 </div>
             </div>

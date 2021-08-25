@@ -14,13 +14,17 @@
                   </div>
                 @endif
 
-                <div class="card-body">
+                
                 @foreach($post AS $post)
-                  @if($post->allreply($post) == false)
-                  <article>
+                @if ($post->checkreply($post))
+                <div class="card-body">
+                 
+                
+                    <article>
+                    
                     <header>
                       <div>
-                        <a href="{{route('user_page', $post->user->id )}}">{{ $post->user->name }}</a>
+                        <a href="{{route('user_page', $post->user_id )}}">{{  $user[$post->user_id - 1]->name  }}</a>
                         
                         <p>{{ $post['updated_at']}}</p>
                       </div>
@@ -57,10 +61,11 @@
                       <hr>
                     </div>
 
-                  </article>
-                  @endif
-                @endforeach
+                    </article>
+                  
                 </div>
+                @endif
+                @endforeach
             </div>
         </div>
     </div>

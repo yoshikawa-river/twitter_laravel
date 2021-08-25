@@ -32,5 +32,8 @@ class goodController extends Controller
 
         return back()->with('success', 'いいね消したよ！');
     }
+
+    
+
     
 }

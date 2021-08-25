@@ -1,27 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
-
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">みんなの投稿</div>
-
-                @if (session('success'))
-                  <div class="alert alert-success" role="alert">
-                    {{ session('success') }}
-                  </div>
-                @endif
+                <div class="card-header">マイページ</div>
 
                 <div class="card-body">
                 @foreach($post AS $post)
-                  @if($post->allreply($post) == false)
+                @if($post->allreply($post) == false)
                   <article>
                     <header>
                       <div>
-                        <a href="{{route('user_page', $post->user->id )}}">{{ $post->user->name }}</a>
-                        
+                        {{$user['name']}}
                         <p>{{ $post['updated_at']}}</p>
                       </div>
                     </header>
@@ -40,9 +32,8 @@
                             <a href="{{route('like',$post) }}"><i class="fas fa-heart fa-2x heart_gray"></i></a>
 	                        @endif
 	                        </div>
-
                           <div>{{ $post->like }}</div>
-
+                        
                           <div class="d-inline float-left">
 	                        @if($post->checkreply($post))
                           <a href="{{route('reply_page', $post) }}"><i class="fas fa-reply fa-2x re_blue"></i></a>
@@ -52,13 +43,12 @@
 	                        </div>
 
                         <div>{{ $post->countreply($post) }}</div>
-                        
                         </div>
                       <hr>
                     </div>
 
                   </article>
-                  @endif
+                @endif
                 @endforeach
                 </div>
             </div>

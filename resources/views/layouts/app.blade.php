@@ -10,6 +10,7 @@
     <style>
         .heart_red{color:#e54747;}
         .heart_gray{color:#808080;}
+        .re_blue{color:#33CCFF;}
     </style>
 
     <title>{{ config('app.name', 'Laravel') }}</title>
@@ -39,6 +40,28 @@
                 <a class="navbar-brand" href="{{ url('/home') }}">
                     {{ __('タイムライン')}}
                 </a>
+
+                <a class="navbar-brand" href="{{ url('/serch_screen') }}">
+                <i class="fas fa-search"></i>
+                {{ __('検索')}}
+                </a>
+
+                <a class="navbar-brand" href="{{ url('/user_all') }}">
+                    {{ __('ユーザー一覧')}}
+                </a>
+
+                <a class="navbar-brand" href="{{ url('/mypage') }}">
+                    {{ __('マイページ')}}
+                </a>
+
+                <a class="navbar-brand" href="{{ url('/mylike') }}">
+                    {{ __('いいね一覧')}}
+                </a>
+
+                <a class="navbar-brand" href="{{ url('/myreply') }}">
+                    {{ __('リプライ一覧')}}
+                </a>
+
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
@@ -71,9 +94,9 @@
                                     {{ Auth::user()->name }}
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('mypage') }}">
+                                    <!-- <a class="dropdown-item" href="{{ route('mypage') }}">
                                         {{ __('マイページ') }}
-                                    </a>
+                                    </a> -->
                                    
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();

@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use App\Models\Post;
 use Auth;
 use App\Models\Like;
+use App\Models\Reply;
 
 class User extends Authenticatable
 {
@@ -54,4 +55,9 @@ class User extends Authenticatable
     { 
        return $this->hasMany(Like::class);
     }
+
+    // public function replies() 
+    // { 
+    //    return $this->hasMany(Reply::class);
+    // }
 }
