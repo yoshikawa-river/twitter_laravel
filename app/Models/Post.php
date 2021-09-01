@@ -10,29 +10,101 @@ use App\Models\Like;
 
 class Post extends Model
 {
-    // use HasFactory;
-
     public function user()
-    {
-        
+    {   
         return $this->belongsTo(User::class);
     }
  
-    public function likes() {
+    public function likes() 
+    {
         return $this->hasMany(Like::class);
     }
 
-    public function checkdate($post) {
+    public function fetchPost () 
+    {
+        $post = Post::orderBy('created_at', 'DESC')->get();
+        return $post;  
+    }
+
+    public function fetchMyPost () 
+    {
+        $user = Auth::user();
+        $post = Post::where('user_id', $user['id'])->orderBy('created_at', 'DESC')->get();
+        return $post;  
+    }
+
+    public function fetchUserPost ($id)
+    {
+        $post = Post::where('user_id', $id)->orderBy('created_at', 'DESC')->get();
+        return $post;
+    }
+
+    public function combineLike()
+    {
+        $user = \Auth::user();
+        $post = Post::select('posts.id as id', 'posts.user_id as user_id', 'content', 'posts.updated_at', 'image', 'posts.reply_id', 'like', 'status', 'posts.created_at')
+        ->join('likes', 'posts.id', '=', 'likes.post_id')
+        ->where('likes.user_id', $user['id'])
+        ->orderBy('likes.created_at', 'DESC')
+        ->get();
+
+        return $post;
+    }
+
+    public function userNewPost($post, $data, $path)
+    {
+        $post->user_id = $data['user_id'];
+        $post->content = $data['content'];
+        $post->image = $path[1];
+        $post->like = 0;
+        $post->status = 1;
+        $post->save();
+    }
+
+    public function editMyPost($id)
+    {
+        $user = \Auth::User();
+        $post = Post::where('id', $id)->where('user_id', $user['id'])->first();
+        return $post;
+    }
+
+    public function serchWordFromPost($keyword)
+    {
+        $post = Post::where('content', 'like', "%$keyword%")->orderBy('created_at', 'DESC')->get();
+        return $post;
+    }
+
+    public function PostPage($id)
+    {
+        $post = Post::where('id', $id)->first();
+        return $post;
+    }
+
+    public function allReplyToPost($id) {
+        $reply = Post::where('reply_id', $id)->orderBy('created_at', 'ASC')->get();
+        return $reply;
+    }
+
+    public function userNewReply($post, $data, $path, $id)
+    {
+        $post->user_id = $data['user_id'];
+        $post->content = $data['content'];
+        $post->image = $path[1];
+        $post->reply_id = $id;
+        $post->like = 0;
+        $post->status = 1;
+        $post->save();
+    }
+
+    public function checkdate($post) 
+    {
         $is_like = false;
         $user = Auth::user();
         $like = new Like;
         $like = Like::where('post_id', $post['id'])->where('user_id', $user['id'])->first();
-        // dd($like);
         if ($like != null) {
             $is_like = true;
         };
-
-        // dd($post);
 
         return $is_like;
     }

@@ -56,8 +56,18 @@ class User extends Authenticatable
        return $this->hasMany(Like::class);
     }
 
-    // public function replies() 
-    // { 
-    //    return $this->hasMany(Reply::class);
-    // }
+    public function updateProfile($data, $path)
+    {
+        $user = \Auth::user();
+        $user->name = $data['name'];
+        $user->prof_img = $path[1];
+        $user->comment = $data['comment'];
+        $user->save();
+    }
+
+    public function getUserId($id) 
+    {
+        $user = User::where('id', $id)->first();
+        return $user;
+    }
 }
